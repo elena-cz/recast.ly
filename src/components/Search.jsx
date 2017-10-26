@@ -5,24 +5,35 @@ class Search extends React.Component {
       value: ''
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleButtonSubmit = this.handleButtonSubmit.bind(this);
+    this.handleEnterSubmit = this.handleEnterSubmit.bind(this);
+    
+    this.debouncedHandleButtonSubmit = _.debounce(this.handleButtonSubmit, 500, {'leading': true});
+    this.debouncedHandleEnterSubmit = _.debounce(this.handleEnterSubmit, 500, {'leading': true});
   }
 
   handleChange(event) {
     this.setState({value: event.target.value});
   }
 
-  handleSubmit(event) {
-    console.log('this', this);
+  handleButtonSubmit(event) {
+        
     this.props.onSearch(this.state.value);
-    event.preventDefault();
+    // event.preventDefault();
   }
+  
+  handleEnterSubmit(event) {
+    if (event.key === 'Enter') {
+      this.props.onSearch(this.state.value);
+    }
+  }
+  
   
   render() {
     return (
     <div className="search-bar form-inline">
-      <input className="form-control" type="text" value={this.state.value} onChange={this.handleChange} />
-      <button className="btn hidden-sm-down" onClick={this.handleSubmit}>
+      <input className="form-control" type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.debouncedHandleEnterSubmit} />
+      <button className="btn hidden-sm-down" type="submit" onClick={this.debouncedHandleButtonSubmit} >
         <span className="glyphicon glyphicon-search" ></span>
       </button>
     </div> 
