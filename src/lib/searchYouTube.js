@@ -2,7 +2,6 @@
 
 var searchYouTube = (options, callback) => {
   var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${options.key}&q=${options.query}&maxResults=${options.max}&videoEmbeddable=true&type=video`;
-  // $.get(URL, callback);
   $.ajax({
     url: url,
     method: 'GET',

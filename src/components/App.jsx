@@ -4,9 +4,9 @@ class App extends React.Component {
     super(props);
     
     this.state = {
-      allVideos: window.exampleVideoData,
-      currentVideo: window.exampleVideoData[3],
-      query: 'cutecats'
+      allVideos: [],
+      currentVideo: {},
+      // query: 'cutecats'
     };
   }
   updateCurrentVideo(video) {
@@ -14,15 +14,34 @@ class App extends React.Component {
       currentVideo: video
     });
   }
-  componentDidMount() {
+  updateAllVideos(videos) {
     
+    this.setState({
+      allVideos: videos,
+      currentVideo: videos[0]
+    }); 
   }
+  
+  getUpdatedVideos(query) {
+    var options = {
+      key: window.YOUTUBE_API_KEY,
+      query: query,
+      max: 5
+    };
+    
+    this.props.searchYouTube(options, this.updateAllVideos.bind(this));
+  }
+  
+  componentDidMount() {
+    this.getUpdatedVideos('cute cats');
+  }
+  
   render() {
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search searchYouTube={this.props.searchYouTube} />
+            <Search onSearch={this.getUpdatedVideos.bind(this)} />
           </div>
         </nav>
         <div className="row">
