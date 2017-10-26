@@ -6,6 +6,7 @@ class App extends React.Component {
     this.state = {
       allVideos: window.exampleVideoData,
       currentVideo: window.exampleVideoData[3],
+      query: 'cutecats'
     };
   }
   updateCurrentVideo(video) {
@@ -19,7 +20,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <Search />
           </div>
         </nav>
         <div className="row">
