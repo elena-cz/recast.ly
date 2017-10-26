@@ -14,13 +14,15 @@ class App extends React.Component {
       currentVideo: video
     });
   }
-  
+  componentDidMount() {
+    
+  }
   render() {
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search searchYouTube={this.props.searchYouTube} />
           </div>
         </nav>
         <div className="row">
